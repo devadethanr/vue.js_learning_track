@@ -13,41 +13,53 @@
             <div class="container-fluid">
               <a class="navbar-brand" href="#">VueJS</a>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">About</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Contact</a>
+                    <!-- using of vue directive here as "for loop" using v-  -->
+                     <!-- key binding index of the array to identify unique -->
+                  <li v-for="(link, index) in links" class="nav-item" :key="index"> 
+                    <!-- the links array has been used here  -->
+                     <!-- v-bind:htmlelement can be used but : can be used to bind shortcut-->
+                      <!-- now link array is changed to link object  -->
+                    <a 
+                        class="nav-link" 
+                        aria-current="page" 
+                        :href="link.url" 
+                        :title="`this link goes to the ${link.text} page`"> 
+                        {{ link.text }}</a>
                   </li>
                 </ul>
             </div>
         </nav>
+
+        <!-- data transfered to html elements using data options in vue  -->
         <div id ='content' class="container">
             <h1>{{ pageTitle }}</h1>
             <h4> {{ content }} </h4>
         </div>
-
+        
         <script>
+            //new application for navbar links 
             Vue.createApp({
                 data() {
                     return {
-                        link: ['Home', 'About', 'Contact']
-                    }
+                        links: [
+                        {text: 'Home', url: 'index.html'}, 
+                        {text: 'About', url: 'about.html'}, 
+                        {text: 'Contact', url: 'contact.html'},
+                        ]
+                    };
                 }
             }).mount('#nav')
 
+            //application for passing contents to content div
             Vue.createApp({
                 data() {
                     return {    
                         pageTitle: 'Hello, Vue',
                         content: 'hey this is a test app'
-                    }
+                    };
                 }
             }).mount('#content');
         </script>
-        
+
     </body>
 </html>
